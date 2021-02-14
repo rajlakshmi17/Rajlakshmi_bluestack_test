@@ -1,10 +1,5 @@
-<h1>Nodejs Rest API Example Using ExpressJS and Mysql</h1>
-I have created simple example to create RESTFul api  using mysql database.I have added following features into this source code,
-<ul>
-<li>Add Record using rest call into mysql database</li>
+<h1>web application to scrap the popular videos from Youtube, save them into the database, and list down the video on a webpage from the database.</h1>
 
-<li>Fetch records using rest call into mysql database</li>
-</ul>
 
 # how to create table in db
 You need to create 'bluestack' database into mysql and import video.sql table into your mysql database.
