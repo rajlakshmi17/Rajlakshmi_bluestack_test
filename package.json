@@ -1,0 +1,27 @@
+{
+  "name": "nodejs-restapi",
+  "version": "1.0.0",
+  "description": "Simple Example of nodejs to create rest call using MySQL",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": {
+    "name": "Rachel",
+    "email": "restapi2example@gmail.com",
+    "url": "http://www.resapiexample.com/"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.16.1",
+    "express": "^4.17.1",
+    "get-youtube-channel-id": "0.0.4",
+    "get-youtube-id": "^1.0.1",
+    "mysql": "^2.18.1",
+    "node-fetch": "^2.6.1",
+    "youtube-dl": "^3.1.0",
+    "yt-channel-info": "^1.2.1",
+    "yt-scraper": "^2.1.0"
+  }
+}
