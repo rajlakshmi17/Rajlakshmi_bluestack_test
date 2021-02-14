@@ -5,6 +5,7 @@
 You need to create 'bluestack' database into mysql and import video.sql table into your mysql database.
 
 # How to run nodejs application
+<p>install node js</p>
 <p>copy index.js and package.json file into your nodejs project folder</p>
 <p>Open command line and cd to your above nodejs project folder</p>
 <p>run 'npm install'</p>
