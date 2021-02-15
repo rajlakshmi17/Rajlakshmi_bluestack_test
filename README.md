@@ -12,6 +12,7 @@ You need to create 'bluestack' database into mysql and import video.sql table in
 <p>run 'npm install express'</p>
 <p>run 'npm install youtube-dl'</p>
 <p>run 'npm install mysql'</p>
+<p>run 'npm i yt-channel-info --save'</p>
 
 #How to access backend
 <li>You need to install xampp.</li>
