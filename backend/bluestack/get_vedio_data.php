@@ -23,6 +23,5 @@ else
   curl_close($ch);
 }
 $output = json_decode( preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $results), true );
-//$jdatas['status'] = 1; 
-//echo json_encode($jdatas);
+
 ?>

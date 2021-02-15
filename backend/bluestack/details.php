@@ -1,16 +1,4 @@
 <?php
-/*require 'db_con.php';
-$id= $_GET['id'];
-$query = $db->query("SELECT id,title,url,view_count,likes_count,dislikes_count,description,thumbnail,channel_title,channel_desc,channel_thumbnail,channel_subscriber from video where id=$id" );
-$rows =array();
-if($query)
-{
-	while($row = $query->fetch_array())
-	{
-		$rows[] = $row;
-	}
-}
-print_r($rows);*/
 $id= $_GET['id'];
 $url='http://127.0.0.1:3000/vedio_list/'.$id;
 $ch = curl_init($url);
@@ -21,7 +9,6 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 $results = curl_exec($ch);
-//print_r($results); die;
 if(curl_errno($ch))
 {
 print curl_error($ch);
@@ -34,93 +21,78 @@ else
 $outputs = json_decode( preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $results), true );
 //print_r($outputs);
 ?>
-<html>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap" rel="stylesheet">
+    <style>
+        .list-formate {
+            margin: 40px 70px;
+            border: 1px solid gray;
+        }
+        
+        .d-inline {
+            font-size: 16px;
+            padding: 8px 20px;
+        }
+        
+        img.img-thumbnail {
+            height: 100px;
+            width: 100px;
+        }
+        
+        .user-detail {
+            margin: 20px 16px;
+        }
+        .margin-top-left {
+		    font-size: 26px;
+		    margin: 41px 70px 0;
+		}
+
+		a {
+		    text-decoration: none;
+        }
+    </style>
+</head>
+
 <body>
-	<div class="dt">
-		<div>
-			<span>
-				<b>Id:</b>
-			</span>
-			<span>
-				<?=$outputs['0']['video_id']?>
-			</span>
-	    </div>
-	    <div>
-			<span>
-				<b>Title:</b>
-			</span>
-			<span>
-				<?=$outputs['0']['title']?>
-			</span>
-	    </div>
-	    <div>
-			<span>
-				<b>Url:</b>
-			</span>
-			<span>
-				<a href="<?=$outputs['0']['url']?>"><?=$outputs['0']['title']?></a>
-			</span>
-	    </div>
-	    <div>
-			<span>
-				<b>Description:</b>
-			</span>
-			<span>
-				<?=$outputs['0']['description']?>
-			</span>
-	    </div>
-	    <div>
-			<span>
-				<b>Thumbnail:</b>
-			</span>
-			<span>
-				<img src="<?=$outputs['0']['thumbnail']?>" style=""></img>
-			</span>
-	    </div>
-	    <div>
-			<span>
-				<b>View Count:</b>
-			</span>
-			<span>
-				<?=$outputs['0']['view_count']?>
-			</span>
-	    </div>
-	    <div>
-			<span>
-				<b>Likes Count:</b>
-			</span>
-			<span>
-				<?=$outputs['0']['likes_count']?>
-			</span>
-	    </div>
-	    <div>
-			<span>
-				<b>Dislikes Count:</b>
-			</span>
-			<span>
-				<?=$outputs['0']['dislikes_count']?>
-			</span>
-	    </div>
-	</div>
+    <div class="margin-top-left"><a href="index.php">Back</a></div>
+    <div class="list-formate">
+        <div class="user-detail">
+            <img class="img-thumbnail" src="<?=$outputs['0']['thumbnail']?>" alt="thumbnail">
+            <div><span><b>Thumbnail</span></b></div>
+        </div>
+        <div class="d-inline">
+            <span><b>Video Id:</b> </span><span><?=$outputs['0']['video_id']?></span>
+        </div>
+        <div class="d-inline">
+            <span><b>Video Title:</b> </span><span><?=$outputs['0']['title']?></span>
+        </div>
+        <div class="d-inline">
+            <span><b>Video Url:</b> </span><span><a href="<?=$outputs['0']['url']?>"><?=$outputs['0']['url']?></a></span>
+        </div>
+        <div class="d-inline">
+            <span><b>Channel Title:</b> </span><span><?=$outputs['0']['channel_title']?></span>
+        </div>
+        <div class="d-inline">
+            <span><b>View Count:</b> </span><span><?=$outputs['0']['view_count']?></span>
+        </div>
+        <div class="d-inline">
+            <span><b>Likes Count:</b> </span><span><?=$outputs['0']['likes_count']?></span>
+        </div>
+        <div class="d-inline">
+            <span><b>Dislikes Count:</b> </span><span><?=$outputs['0']['dislikes_count']?></span>
+        </div>
+        <div class="d-inline">
+            <span><b>Descripition</b> </span><span><?=$outputs['0']['description']?></span>
+        </div>
+    </div>
+
 </body>
+
 </html>
-<style>
-img {
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 5px;
-  width: 50px;
-}
-.dt
-{
-    margin: auto;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    /*position: absolute;*/
-    width: 600;
-    height: 100px;
-    
-}
-</style>
