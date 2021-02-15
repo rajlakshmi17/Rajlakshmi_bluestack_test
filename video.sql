@@ -41,7 +41,9 @@ CREATE TABLE `video` (
   `channel_title` varchar(100) NOT NULL,
   `channel_desc` text NOT NULL,
   `channel_thumbnail` text NOT NULL,
+  `channel_thumbnails_details` text NOT NULL,
   `channel_subscriber` varchar(100) NOT NULL,
+  `channel_subscriber_count` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

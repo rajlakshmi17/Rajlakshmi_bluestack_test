@@ -5,8 +5,9 @@ var mysql      = require('mysql');
 var bodyParser = require('body-parser');
 const fs = require('fs')
 const youtubedl = require('youtube-dl')
-//const fetch = require('node-fetch');
-//start mysql connection
+// If using require
+const ytch = require('yt-channel-info')
+
 var connection = mysql.createConnection({
   host     : 'localhost', //mysql database host name
   user     : 'root', //mysql database user name
@@ -61,11 +62,14 @@ youtubedl.getInfo(url,options,function(err, info) {
   //console.log(JSON.stringify(info.thumbnails));
   var count_sql = "SELECT * FROM video where video_id='"+info.id+"'";
   var query = connection.query(count_sql, function(err, result) {
-  
-      if(result.length==0)
+  const channelId = info.channel_id
+
+  ytch.getChannelInfo(channelId).then((response) => {
+     
+     if(result.length==0)
       {
         
-        var sql = "INSERT INTO video ( video_id, title, url, description,thumbnail,thumbnails_details,view_count,likes_count,dislikes_count,channel_title) VALUES ('"+info.id+"','"+info.title.replace("'", "")+"','" +url.replace("'", "")+"','"+ info.description.replace("'", "")+"','"+info.thumbnail.replace("'", "")+"','"+JSON.stringify(info.thumbnails)+"','"+info.view_count+"','"+info.like_count+"','"+info.dislike_count+"','"+info.uploader+"')";
+        var sql = "INSERT INTO video ( video_id, title, url, description,thumbnail,thumbnails_details,view_count,likes_count,dislikes_count,channel_title,channel_subscriber,channel_subscriber_count,channel_desc,channel_thumbnail,channel_thumbnails_details) VALUES ('"+info.id+"','"+info.title.replace("'", "")+"','" +url.replace("'", "")+"','"+ info.description.replace("'", "")+"','"+info.thumbnail.replace("'", "")+"','"+JSON.stringify(info.thumbnails)+"','"+info.view_count+"','"+info.like_count+"','"+info.dislike_count+"','"+info.uploader+"','"+response.subscriberText+"','"+response.subscriberCount+"','"+response.description+"','"+response.authorThumbnails['0']['url']+"','"+JSON.stringify(response.authorThumbnails)+"')";
         //console.log(sql)
         connection.query(sql, function (err, result) {  
         if (err) throw err;  
@@ -74,12 +78,18 @@ youtubedl.getInfo(url,options,function(err, info) {
       }
       else
       {
-        var sql = "update video set title='"+info.title.replace("'", "")+"',url='"+url.replace("'", "")+"',description='"+info.description.replace("'", "")+"',thumbnail='"+info.thumbnail.replace("'", "")+"',thumbnails_details='"+JSON.stringify(info.thumbnails)+"',view_count="+info.view_count+",likes_count="+info.like_count+",dislikes_count="+info.dislike_count+",channel_title='"+info.uploader+"' where video_id='"+info.id+"'";
+        var sql = "update video set title='"+info.title.replace("'", "")+"',url='"+url.replace("'", "")+"',description='"+info.description.replace("'", "")+"',thumbnail='"+info.thumbnail.replace("'", "")+"',thumbnails_details='"+JSON.stringify(info.thumbnails)+"',view_count="+info.view_count+",likes_count="+info.like_count+",dislikes_count="+info.dislike_count+",channel_title='"+info.uploader+"',channel_desc='"+response.description+"',channel_subscriber='"+response.subscriberText+"',channel_subscriber_count='"+response.subscriberCount+"',channel_thumbnail='"+response.authorThumbnails['0']['url']+"',channel_thumbnails_details='"+JSON.stringify(response.authorThumbnails)+"' where video_id='"+info.id+"'";
+        
         connection.query(sql, function (err, result) {  
         if (err) throw err;  
           res.send({ message: 'record updated',status:1 });
         });
       }
+    
+  }).catch((err) => {
+     console.log(err)
+  })
+      
       
   });
   
