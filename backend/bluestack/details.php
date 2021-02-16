@@ -19,7 +19,7 @@ else
   curl_close($ch);
 }
 $outputs = json_decode( preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $results), true );
-//print_r($outputs);
+$video_url = str_replace('watch?v=', 'embed/', $outputs['0']['url']);
 ?>
 
 <!DOCTYPE html>
@@ -63,6 +63,8 @@ $outputs = json_decode( preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $results), tr
 <body>
     <div class="margin-top-left"><a href="index.php">Back</a></div>
     <div class="list-formate">
+        <iframe width="1000" height="500" src="<?=$video_url?>" frameborder="0" allowfullscreen ng-show="showvideo" allow='autoplay'>
+        </iframe>
         <div class="user-detail">
             <img class="img-thumbnail" src="<?=$outputs['0']['thumbnail']?>" alt="thumbnail">
             <div><span><b>Video Thumbnail</span></b></div>
